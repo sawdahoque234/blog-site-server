@@ -4,7 +4,8 @@ import cors from "cors";
 import morgan from "morgan";
 import userRouter from "./routes/user.js"
 import blogRouter from "./routes/blog.js";
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
 app.use(morgan("dev"));
@@ -16,9 +17,10 @@ app.use(express.json())
 app.use("/users",userRouter);// http://localhost:5000/users/signup
 app.use("/blog", blogRouter);
 
-const port = 5000
+const port = process.env.PORT || 5000
+
 //mongodb_url
-const MONGODB_URL = "mongodb+srv://sawda123hoq:YipUryDAXBdidTDR@cluster0.n2nlv.mongodb.net/blog_db?retryWrites=true&w=majority";
+const MONGODB_URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.n2nlv.mongodb.net/blog_db?retryWrites=true&w=majority`;
 
 mongoose.connect(MONGODB_URL)
   .then(() => {
